@@ -1,0 +1,21 @@
+{
+  "globalstrict": true,
+  "esnext": true,
+  "elision": true,
+  "expr": true,
+  "globals": {
+    "module": false,
+    "window": false,
+    "document": false,
+    "console": false,
+    "sessionStorage": false,
+    "localStorage": false,
+
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false
+  }
+}
