@@ -33,11 +33,13 @@ Try to keep the code consistent - basically don't make it ugly. Specifics are he
 * put all `import`s at the top of the file and `export`s at the bottom
 * more files is not a bad thing - make modules wherever it makes sense
 * do the braces like this (not on their own lines):
+
   ```javascript
   if (something) {
     // do it
   }
   ```
+  
 * camelCase for variable/function names (including variables defined with
     `const` at local scope)
 * Capitalize class names
