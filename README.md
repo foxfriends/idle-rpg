@@ -1,5 +1,5 @@
 [NodeJS]: http://nodejs.org
-# idle-rpg
+# Ball Box (name TBD)
 
 ## Setup
 
@@ -10,7 +10,8 @@ To initialize the project, type `npm install` in the terminal/command prompt. Th
 will download any packages you need.
 
 After that, you will also have to manually install a few packages globally with:
-```
+
+```bash
 npm install --global webpack http-server
 ```
 
@@ -18,7 +19,8 @@ npm install --global webpack http-server
 
 To run the project, open the terminal to this directory and type `npm start`.
 Also, in a second terminal at this directory run `webpack --watch` to compile
-the code while you are working.
+the code while you are working. You can then see it in your browser at
+'localhost:8080'.
 
 ## Code style
 
@@ -39,7 +41,7 @@ Try to keep the code consistent - basically don't make it ugly. Specifics are he
     // do it
   }
   ```
-  
+
 * camelCase for variable/function names (including variables defined with
     `const` at local scope)
 * Capitalize class names
