@@ -4,5 +4,5 @@
 *.scss text
 *.json text
 *.md text
-*.aag text
+*.aag text eol=lf
 package.json text eol=lf
