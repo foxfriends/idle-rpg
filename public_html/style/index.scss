@@ -1,3 +1,18 @@
 body {
   display: block;
+  text-align: center;
+}
+
+.container {
+  display: inline-block;
+  margin: 0 auto;
+  width: 120ch;
+  height: 100%;
+  overflow: hidden;
+  text-align: left;
+}
+
+.pre {
+  font-family: monospace;
+  white-space: pre;
 }
