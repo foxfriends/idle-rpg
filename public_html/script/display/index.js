@@ -1,5 +1,6 @@
 // Manages the state of what's being displayed on screen
 'use strict';
+import normalizeNewline from 'normalize-newline';
 const [DIMENSIONS, CONTENT, ELEMENT] = [Symbol(), Symbol(), Symbol()];
 
 // A Display represents a new "display area" on the screen in which to draw the
@@ -28,6 +29,7 @@ class Display {
   //    by default. Ensure images are saved with Unix file endings (LF, not
   //    CRLF) or there will be too much spacing.
   image(img, x, y, showBack = false, background = ' ') {
+    img = normalizeNewline(img);
     const width = img.split('\n').reduce((longest, line) => Math.max(longest, line.length), 0);
     for(let line of img.split('\n')) {
       for(let i = 0; i < width; ++i) {
