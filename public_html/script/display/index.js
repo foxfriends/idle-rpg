@@ -7,7 +7,7 @@ const [DIMENSIONS, CONTENT, ELEMENT, PREV_LOC, BUTTONS] = [Symbol(), Symbol(), S
 // A Display represents a new "display area" on the screen in which to draw the
 //    images and text
 class Display {
-  // new Display(width: number = 120, height: number = 120)
+  // new Display(width: number = 120, height: number = 60)
   //    creates a new display area with the given dimensions.
   constructor(width = 120, height = 60) {
     this[DIMENSIONS] = { width: width, height: height };
