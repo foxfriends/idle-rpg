@@ -20,9 +20,9 @@ class Button {
     this[ELEMENT].style.top = `${region[1]}em`;
   }
 
-  // .attach(display: HTMLDivElement)
-  //    creates the actual interactive areas for this button over the text in
-  //    the given div
+  // .attach(display: HTMLDivElement): void
+  //    adds the actual interactive area for this button over the text as an
+  //    overlay on the given div
   attach(display) {
     display.appendChild(this[ELEMENT]);
   }
