@@ -1,3 +1,5 @@
+@import 'colors';
+
 body {
   display: block;
   text-align: center;
@@ -18,7 +20,21 @@ body {
   white-space: pre;
 
   span.button {
+    box-sizing: border-box;
     position: absolute;
-    cursor: pointer;
+    white-space: pre;
+    overflow: hidden;
+
+    &.normal, &.real {
+      cursor: pointer;
+    }
+
+    &.real {
+      background-color: $button-color;
+      border: 1px solid $button-border;
+      &:hover {
+        background-color: lighten($button-color, 10);
+      }
+    }
   }
 }

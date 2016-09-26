@@ -1,7 +1,7 @@
 // Manages the state of what's being displayed on screen
 'use strict';
 import normalizeNewline from 'normalize-newline';
-import Button from './button';
+import Button, { ButtonStyles } from './button';
 const [DIMENSIONS, CONTENT, ELEMENT, PREV_LOC, BUTTONS] = [Symbol(), Symbol(), Symbol(), Symbol(), Symbol()];
 
 // A Display represents a new "display area" on the screen in which to draw the
@@ -34,8 +34,9 @@ class Display {
   image(img, x, y, showBack = false, background = ' ') {
     img = normalizeNewline(img);
     const lines = img.split('\n');
+    if(lines[lines.length - 1] === '') { --lines.length; } // remove final empty line
     const width = lines.reduce((longest, line) => Math.max(longest, line.length), 0);
-    this[PREV_LOC] = [x, y, width, y + lines.length];
+    this[PREV_LOC] = [x, y, width, lines.length];
     for(let line of img.split('\n')) {
       for(let i = 0; i < width; ++i) {
         if(x + i >= this[DIMENSIONS].width) { break; }
@@ -54,6 +55,18 @@ class Display {
   //    draws the string str at the given location
   text(str, x, y) { return this.image(str, x, y); }
 
+  // .fill(char: string, x: number, y: number, w: number, h: number): this
+  //    fills the given region with a character
+  fill(char, x, y, w, h) {
+    this[PREV_LOC] = [x, y, w, h];
+    for(let i = 0; i < h; ++i) {
+      for(let j = 0; j < w; ++j) {
+        this[CONTENT][i][j] = char[0];
+      }
+    }
+    return this;
+  }
+
   // .repaint(): void
   //    refreshes the screen with the current content
   repaint() {
@@ -69,13 +82,14 @@ class Display {
 
   // .interactive(
   //    actions: { enter: function, click: function, leave: function },
-  //    region: number[4] = this[PREV_LOC]
+  //    style: ButtonStyle = ButtonStyles.Normal
+  //    region: number[4] = this[PREV_LOC],
   // ): this
   //    creates a button over the given region, or the most recently drawn image
   //    or block of text if a region is not specified, which performs the
   //    actions on mouseover, click, and mouseout
-  interactive(actions, region = this[PREV_LOC]) {
-    this[BUTTONS].push(new Button(actions, region));
+  interactive(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
+    this[BUTTONS].push(new Button(actions, region, style));
     this.repaint();
     return this;
   }
