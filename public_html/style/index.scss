@@ -24,6 +24,7 @@ body {
     position: absolute;
     white-space: pre;
     overflow: hidden;
+    user-select: none;
 
     &.normal, &.real {
       cursor: pointer;
