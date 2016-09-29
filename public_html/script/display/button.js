@@ -1,12 +1,13 @@
 // A Button can be placed over an area, making part of the map interactive to
-//    mouse events. Can be in different styles:
-// Normal: pointer cursor, no border/background
-// Ninja: text cursor: no border/background
-// Real: pointer cursor, background + border + hover state
+//    mouse events.
 'use strict';
 import { FONT_HEIGHT } from '../const';
 const [REGION, ACTIONS, ELEMENT] = [Symbol(), Symbol(), Symbol()];
 
+// Styles for buttons:
+//  Normal - pointer cursor, no border/background
+//  Ninja - text cursor: no border/background
+//  Real - pointer cursor, background + border + hover state
 const ButtonStyles = {
   Normal: 'normal',
   Ninja: 'ninja',
