@@ -44,6 +44,15 @@ class Button {
     }
     display.appendChild(this[ELEMENT]);
   }
+
+  // .intersects(region: number[4]): bool
+  //    determines if this button's region intersects the given region
+  intersects(region) {
+    return (
+      (this[REGION][0] < region[0] + region[2] && this[REGION][0] + this[REGION][2] > region[0]) &&
+      (this[REGION][1] < region[1] + region[3] && this[REGION][1] + this[REGION][3] > region[1])
+    );
+  }
 }
 
 export { ButtonStyles, Button };

@@ -96,7 +96,7 @@ class Display {
     this[ELEMENT].parentNode.removeChild(this[ELEMENT]);
   }
 
-  // .interactive(
+  // .createButton(
   //    actions: { enter: function, click: function, leave: function },
   //    style: ButtonStyle = ButtonStyles.Normal
   //    region: number[4] = this[PREV_LOC],
@@ -104,8 +104,16 @@ class Display {
   //    creates a button over the given region, or the most recently drawn image
   //    or block of text if a region is not specified, which performs the
   //    actions on mouseover, click, and mouseout
-  interactive(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
+  createButton(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
     this[BUTTONS].push(new Button(actions, region, style));
+    this.repaint();
+    return this;
+  }
+
+  // .removeButton(region: number[4] = this[PREV_LOC]): this
+  //    removes any buttons that intersect the given region
+  removeButton(region = this[PREV_LOC]) {
+    this[BUTTONS] = this[BUTTONS].filter((bt) => !bt.intersects(region));
     this.repaint();
     return this;
   }

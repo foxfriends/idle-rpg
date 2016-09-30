@@ -10,5 +10,11 @@ import intro from './intro';
 
 // put the states in order
 generate(function*() {
-  yield* intro();
+  try {
+    yield* intro();
+  } catch(_) {
+    // Game over... how did you lose this game ><
+    //  - Throwing away your only ball during the intro
+    console.error("GAME OVER!");
+  }
 });

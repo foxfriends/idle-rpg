@@ -20,7 +20,10 @@ class BallCounter {
   // .amount: number
   //    the number of balls currently available to be used
   get amount() { return Math.floor(this[AMOUNT]); }
-
+  set amount(amount) {
+    this[AMOUNT] = amount;
+    this.trigger('change');
+  }
   // .rate: number
   //    the number of balls that are gained per second
   get rate() { return this[RATE]; }
@@ -46,9 +49,9 @@ class BallCounter {
   //    reached
   when(amount) {
     return new Promise((resolve) => {
-      const checker = this.on('tick', () => {
+      const checker = this.on('change', () => {
         if(this[AMOUNT] >= amount) {
-          this.off('tick', checker);
+          this.off('change', checker);
           resolve();
         }
       });
@@ -71,7 +74,7 @@ class BallCounter {
   // .off(event: string, handler: function): void
   //    removes a specific handler from a given event
   off(event, handler) {
-    this[ON][event].filter((fn) => fn === handler);
+    this[ON][event] = this[ON][event].filter((fn) => fn === handler);
   }
 
   // .trigger(event: string): void
