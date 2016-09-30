@@ -28,7 +28,7 @@ class Button {
     this[ELEMENT].style.width = `${region[2]}ch`;
     this[ELEMENT].style.height = `${region[3] * h}px`;
     this[ELEMENT].style.left = `${region[0]}ch`;
-    this[ELEMENT].style.top = `${region[1] * h}px`;
+    this[ELEMENT].style.top = `${region[1] * h - 1}px`;
   }
 
   // .attach(display: HTMLDivElement): void

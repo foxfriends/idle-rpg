@@ -11,7 +11,7 @@ class BallCounter {
     this[THROWN] = 0;
     this[ON] = {};
     window.setInterval(() => {
-      this[AMOUNT] += this[RATE];
+      this[AMOUNT] += this.rate;
       this.trigger('tick');
       this.trigger('change');
     }, 1000);
@@ -32,9 +32,9 @@ class BallCounter {
   // .throw(): void
   //    throws a ball away ( -1 ball, +1 thrown )
   throw() {
-    if(this[AMOUNT]) {
-      --this[AMOUNT];
-      ++this[THROWN];
+    if(this.amount) {
+      --this.amount;
+      ++this.thrown;
       this.trigger('throw');
       this.trigger('change');
     }
@@ -43,18 +43,21 @@ class BallCounter {
   // .thrown: number
   //    the number of balls that have been thrown away
   get thrown() { return this[THROWN]; }
+  set thrown(thrown) { this[THROWN] = thrown; }
 
   // .when(amount: number): Promise<void>
+  // .when(min: number, max: number): Promise<void>
   //    returns a promise that resolves when the required amount of balls is
-  //    reached
-  when(amount) {
+  //    reached, or when the number of balls lies within a range
+  when(min, max = min) {
     return new Promise((resolve) => {
-      const checker = this.on('change', () => {
-        if(this[AMOUNT] >= amount) {
+      const checker = () => {
+        if(this.amount >= min && this.amount <= max) {
           this.off('change', checker);
           resolve();
         }
-      });
+      };
+      this.on('change', checker);
     });
   }
 
@@ -74,7 +77,7 @@ class BallCounter {
   // .off(event: string, handler: function): void
   //    removes a specific handler from a given event
   off(event, handler) {
-    this[ON][event] = this[ON][event].filter((fn) => fn === handler);
+    this[ON][event] = this[ON][event].filter((fn) => fn !== handler);
   }
 
   // .trigger(event: string): void

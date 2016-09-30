@@ -58,9 +58,9 @@ class Display {
     return this;
   }
 
-  // .text(str: string, x: number, y: number): this
-  //    draws the string str at the given location
-  text(str, x, y) { return this.image(str, x, y, true); }
+  // .text(str: string | () => string, x: number, y: number): this
+  //    draws str or the value returned by str at the given location
+  text(str, x, y) { return this.image(typeof str === 'function' ? str() : str, x, y, true); }
 
   // .fill(char: string, x: number, y: number, w: number, h: number): this
   //    fills the given region with a character
@@ -68,7 +68,7 @@ class Display {
     this[PREV_LOC] = [x, y, w, h];
     for(let i = 0; i < h; ++i) {
       for(let j = 0; j < w; ++j) {
-        this[CONTENT][i][j] = char[0];
+        this[CONTENT][y+i][x+j] = char[0];
       }
     }
     return this;
