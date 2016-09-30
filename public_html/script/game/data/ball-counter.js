@@ -24,6 +24,7 @@ class BallCounter {
     this[AMOUNT] = amount;
     this.trigger('change');
   }
+  
   // .rate: number
   //    the number of balls that are gained per second
   get rate() { return this[RATE]; }

@@ -29,6 +29,7 @@ class Display {
   // .width: number
   //    the width of the display
   get width() { return this[DIMENSIONS].width; }
+
   // .height: number
   //    the height of the display
   get height() { return this[DIMENSIONS].height; }
@@ -75,7 +76,8 @@ class Display {
   }
 
   // .clear(char: string = ' '): this
-  //    fills the entire display with a character
+  //    reset the display, clearing the content and buttons. Can optionally
+  //    clear the content with something other than empty space
   clear(char = ' ') {
     this[CONTENT] = this[CONTENT].map((c) => c.map(() => char));
     this[PREV_LOC] = [0, 0, 0, 0];

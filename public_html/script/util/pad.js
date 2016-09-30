@@ -3,9 +3,11 @@
 //    used for padding can be specified.
 'use strict';
 
-export default (str, len, padding = ' ') => {
+function pad(str, len, padding = ' ') {
   while(str.length < len) {
     str += padding;
   }
   return str;
-};
+}
+
+export default pad;

@@ -4,7 +4,8 @@
 //    Basically a wrapper around generators to make them work like async functions.
 'use strict';
 
-export default (generator, that, ...args) => new Promise((resolve, reject) => {
+function generate(generator, that, ...args) {
+  return new Promise((resolve, reject) => {
     const run = generator.call(that, ...args);
     // run the next step of the generator
     const pass = (args) => run.next(args);
@@ -19,3 +20,6 @@ export default (generator, that, ...args) => new Promise((resolve, reject) => {
     // start the generator
     next(run.next());
   });
+}
+
+export default generate;
