@@ -7,9 +7,9 @@ const [DIMENSIONS, CONTENT, ELEMENT, PREV_LOC, BUTTONS] = [Symbol(), Symbol(), S
 // A Display represents a new "display area" on the screen in which to draw the
 //    images and text
 class Display {
-  // new Display(width: number = 120, height: number = 60)
+  // new Display(width: number = 120, height: number = 45)
   //    creates a new display area with the given dimensions.
-  constructor(width = 120, height = 60) {
+  constructor(width = 120, height = 45) {
     this[DIMENSIONS] = { width: width, height: height };
     this[PREV_LOC] = [0, 0, 0, 0];
     this[CONTENT] = [];
@@ -25,6 +25,14 @@ class Display {
     document.querySelector('#game').appendChild(this[ELEMENT]);
     this.repaint();
   }
+
+  // .width: number
+  //    the width of the display
+  get width() { return this[DIMENSIONS].width; }
+
+  // .height: number
+  //    the height of the display
+  get height() { return this[DIMENSIONS].height; }
 
   // .image(img: ASCIIArt, x: number, y: number): this
   //    places the img at the specified position in the display area,
@@ -51,9 +59,9 @@ class Display {
     return this;
   }
 
-  // .text(str: string, x: number, y: number): this
-  //    draws the string str at the given location
-  text(str, x, y) { return this.image(str, x, y); }
+  // .text(str: string | () => string, x: number, y: number): this
+  //    draws str or the value returned by str at the given location
+  text(str, x, y) { return this.image(typeof str === 'function' ? str() : str, x, y, true); }
 
   // .fill(char: string, x: number, y: number, w: number, h: number): this
   //    fills the given region with a character
@@ -61,9 +69,19 @@ class Display {
     this[PREV_LOC] = [x, y, w, h];
     for(let i = 0; i < h; ++i) {
       for(let j = 0; j < w; ++j) {
-        this[CONTENT][i][j] = char[0];
+        this[CONTENT][y+i][x+j] = char[0];
       }
     }
+    return this;
+  }
+
+  // .clear(char: string = ' '): this
+  //    reset the display, clearing the content and buttons. Can optionally
+  //    clear the content with something other than empty space
+  clear(char = ' ') {
+    this[CONTENT] = this[CONTENT].map((c) => c.map(() => char));
+    this[PREV_LOC] = [0, 0, 0, 0];
+    this[BUTTONS] = [];
     return this;
   }
 
@@ -80,7 +98,7 @@ class Display {
     this[ELEMENT].parentNode.removeChild(this[ELEMENT]);
   }
 
-  // .interactive(
+  // .createButton(
   //    actions: { enter: function, click: function, leave: function },
   //    style: ButtonStyle = ButtonStyles.Normal
   //    region: number[4] = this[PREV_LOC],
@@ -88,8 +106,16 @@ class Display {
   //    creates a button over the given region, or the most recently drawn image
   //    or block of text if a region is not specified, which performs the
   //    actions on mouseover, click, and mouseout
-  interactive(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
+  createButton(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
     this[BUTTONS].push(new Button(actions, region, style));
+    this.repaint();
+    return this;
+  }
+
+  // .removeButton(region: number[4] = this[PREV_LOC]): this
+  //    removes any buttons that intersect the given region
+  removeButton(region = this[PREV_LOC]) {
+    this[BUTTONS] = this[BUTTONS].filter((bt) => !bt.intersects(region));
     this.repaint();
     return this;
   }

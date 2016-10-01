@@ -1,6 +1,20 @@
+// Manages the current state of the game (balls, progress, stats, etc.)
 'use strict';
-import Display from '../display';
-import ball from '../graphics/ball.aag';
+import generate from '../util/generate';
 
-const display = new Display();
-display.image(ball, 5, 5).interactive({ click() { console.log('3'); } }, 'real');
+// initialize data
+import './data/balls';
+
+// get the different states
+import intro from './intro';
+
+// put the states in order
+generate(function*() {
+  try {
+    yield* intro();
+  } catch(_) {
+    // Game over... how did you lose this game ><
+    //  - Throwing away your only ball during the intro
+    console.error("GAME OVER!");
+  }
+});
