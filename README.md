@@ -28,7 +28,7 @@ Try to keep the code consistent - basically don't make it ugly. Specifics are he
 * use single quotes `'` for strings (except template strings)
 * indent with 2 spaces
 * use triple equals `===` and `!==` for equality always
-  * NO double equals `==` or '!=' because double equals is bad
+  * NO double equals `==` or `!=` because double equals is bad
 * use `const` for all variables, unless mutation is needed then use `let`
   * NO `var` because `var` is bad
 * start all new files with `'use strict';` on its own line
@@ -42,8 +42,7 @@ Try to keep the code consistent - basically don't make it ugly. Specifics are he
   }
   ```
 
-* camelCase for variable/function names (including variables defined with
-    `const` at local scope)
+* camelCase for variable/function names (including variables defined with `const` at local scope)
 * Capitalize class names
 * ALL_CAPS for constants defined at file scope
 * write some comments where the code is not self-descriptive
