@@ -12,9 +12,12 @@ class BallCounter {
     this[THROWN] = 0;
     this[ON] = {};
     window.setInterval(() => {
+      const prev = this.amount;
       this[AMOUNT] += this.rate;
       this.trigger('tick');
-      this.trigger('change');
+      if(prev !== this.amount) {
+        this.trigger('change');
+      }
     }, 1000);
   }
 
