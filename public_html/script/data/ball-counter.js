@@ -1,11 +1,12 @@
 // A BallCounter manages the available balls
 'use strict';
 
-const [RATE, AMOUNT, THROWN, ON] = [Symbol(), Symbol(), Symbol(), Symbol()];
+const [UNIT, RATE, AMOUNT, THROWN, ON] = [Symbol(), Symbol(), Symbol(), Symbol(), Symbol()];
 
 class BallCounter {
-  // new BallCounter()
-  constructor() {
+  // new BallCounter(unit: string = 'ball')
+  constructor(unit = 'ball') {
+    this[UNIT] = unit;
     this[RATE] = 0;
     this[AMOUNT] = 0;
     this[THROWN] = 0;
@@ -24,7 +25,7 @@ class BallCounter {
     this[AMOUNT] = amount;
     this.trigger('change');
   }
-  
+
   // .rate: number
   //    the number of balls that are gained per second
   get rate() { return this[RATE]; }
@@ -85,6 +86,24 @@ class BallCounter {
   //    triggers an event, calling all handlers
   trigger(event) {
     for(let f of this[ON][event] || []) { f(); }
+  }
+
+  // .toString(longForm: boolean = false): string
+  //    returns a human readable description of how many balls you have. The
+  //    long form is even more human readable.
+  toString(longForm = false) {
+    return longForm ?
+      `You have ${this.amount} ${this[UNIT]}${this.amount === 1 ? '' : 's'}` :
+      `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s: ${this.amount}`;
+  }
+
+  // .thrownString(longForm: boolean = false): string
+  //    returns a human readable description of how many balls you have thrown.
+  //    The long form is even more human readable.
+  thrownString(longForm = false) {
+    return longForm ?
+      `You have thrown away ${this.thrown} ${this[UNIT]}${this.thrown === 1 ? '' : 's'}` :
+      `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s thrown: ${this.thrown}`;
   }
 }
 

@@ -8,7 +8,7 @@
 //  - Once you run out of space in your hands to hold the ball organize, button appears
 //  - Clean up everything, intro is over!
 'use strict';
-import balls from '../data/balls';
+import balls from '../../data/balls';
 import Display from '../../display';
 import { ButtonStyles } from '../../display/button';
 import wait from '../../util/wait';
@@ -16,7 +16,6 @@ import pad from '../../util/pad';
 
 export default function*() {
   const display = new Display();
-  const ballCount = () => pad(`You have ${balls.amount} ball${balls.amount === 1 ? '' : 's'}.`, display.width);
   const thrownCount = () => pad(`You have thrown away ${balls.thrown} ball${balls.thrown === 1 ? '' : 's'}.`, display.width);
   // wait 10 seconds for first ball
   const firstBall = wait(10000);
@@ -29,13 +28,13 @@ export default function*() {
   const squeezeButton = wait(10000);
   display.clear()
     .text('A ball falls from the sky.', 0, 0)
-    .text(ballCount, 0, 1)
+    .text(balls.toString(true), 0, 1)
     .text('Throw', 0, 2).createButton( {
       click() {
         balls.throw();
         squeezeButton.cancel();
         display
-          .text(ballCount, 0, 1)
+          .text(balls.toString(true), 0, 1)
           .text('You have thrown away your only ball.', 0, 2).removeButton();
       } }, ButtonStyles.Real );
   yield squeezeButton;
@@ -45,12 +44,12 @@ export default function*() {
   // wait for the player to throw away the balls
   display.clear()
     .text('You squeeze the ball, and another one pops out.', 0, 0)
-    .text(ballCount, 0, 1)
+    .text(balls.toString(true), 0, 1)
     .text('Throw', 0, 2).createButton( {
       click() {
         balls.throw();
         display
-          .text(ballCount, 0, 1)
+          .text(balls.toString(true), 0, 1)
           .text(thrownCount, 0, 3);
       } }, ButtonStyles.Real );
   yield balls.when(0);
@@ -87,7 +86,7 @@ export default function*() {
       });
     }
   });
-  const counter = balls.on('change', () => display.text(ballCount, 0, 1));
+  const counter = balls.on('change', () => display.text(balls.toString(true), 0, 1));
   yield balls.when(10);
   yield new Promise((resolve) => {
     display
@@ -95,7 +94,7 @@ export default function*() {
       .text('Organize', 0, 2).createButton({
         click() {
           // clear all the things
-          balls.amount += ballsOnScreen.length;
+          balls.amount += ballsOnScreen.size;
           display.destroy();
           resolve();
         }
@@ -105,5 +104,6 @@ export default function*() {
   });
   balls.off('change', counter);
   balls.off('tick', ticker);
+  balls.rate = 0.5;
   // intro is over!
 }
