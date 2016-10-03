@@ -3,7 +3,8 @@
 import generate from '../util/generate';
 
 // initialize data
-import './data/balls';
+import '../data/balls';
+import Hud from '../hud';
 
 // get the different states
 import intro from './intro';
@@ -12,9 +13,11 @@ import intro from './intro';
 generate(function*() {
   try {
     yield* intro();
-  } catch(_) {
+    const hud = new Hud();
+  } catch(error) {
     // Game over... how did you lose this game ><
     //  - Throwing away your only ball during the intro
     console.error("GAME OVER!");
+    console.error(error);
   }
 });

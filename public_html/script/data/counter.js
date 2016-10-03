@@ -1,19 +1,25 @@
-// A BallCounter manages the available balls
+// A Counter manages the number of balls you have, how fast they are growing,
+//    and how many have been thrown, providing events to react to changes in
+//    the ball count
 'use strict';
 
-const [RATE, AMOUNT, THROWN, ON] = [Symbol(), Symbol(), Symbol(), Symbol()];
+const [UNIT, RATE, AMOUNT, THROWN, ON] = [Symbol(), Symbol(), Symbol(), Symbol(), Symbol()];
 
-class BallCounter {
-  // new BallCounter()
-  constructor() {
+class Counter {
+  // new Counter(unit: string = 'ball')
+  constructor(unit = 'ball') {
+    this[UNIT] = unit;
     this[RATE] = 0;
     this[AMOUNT] = 0;
     this[THROWN] = 0;
     this[ON] = {};
     window.setInterval(() => {
+      const prev = this.amount;
       this[AMOUNT] += this.rate;
       this.trigger('tick');
-      this.trigger('change');
+      if(prev !== this.amount) {
+        this.trigger('change');
+      }
     }, 1000);
   }
 
@@ -24,7 +30,7 @@ class BallCounter {
     this[AMOUNT] = amount;
     this.trigger('change');
   }
-  
+
   // .rate: number
   //    the number of balls that are gained per second
   get rate() { return this[RATE]; }
@@ -86,6 +92,24 @@ class BallCounter {
   trigger(event) {
     for(let f of this[ON][event] || []) { f(); }
   }
+
+  // .toString(longForm: boolean = false): string
+  //    returns a human readable description of how many balls you have. The
+  //    long form is even more human readable.
+  toString(longForm = false) {
+    return longForm ?
+      `You have ${this.amount} ${this[UNIT]}${this.amount === 1 ? '' : 's'}` :
+      `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s: ${this.amount}`;
+  }
+
+  // .thrownString(longForm: boolean = false): string
+  //    returns a human readable description of how many balls you have thrown.
+  //    The long form is even more human readable.
+  thrownString(longForm = false) {
+    return longForm ?
+      `You have thrown away ${this.thrown} ${this[UNIT]}${this.thrown === 1 ? '' : 's'}` :
+      `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s thrown: ${this.thrown}`;
+  }
 }
 
-export default BallCounter;
+export default Counter;
