@@ -1,10 +1,12 @@
-// A BallCounter manages the available balls
+// A Counter manages the number of balls you have, how fast they are growing,
+//    and how many have been thrown, providing events to react to changes in
+//    the ball count
 'use strict';
 
 const [UNIT, RATE, AMOUNT, THROWN, ON] = [Symbol(), Symbol(), Symbol(), Symbol(), Symbol()];
 
-class BallCounter {
-  // new BallCounter(unit: string = 'ball')
+class Counter {
+  // new Counter(unit: string = 'ball')
   constructor(unit = 'ball') {
     this[UNIT] = unit;
     this[RATE] = 0;
@@ -110,4 +112,4 @@ class BallCounter {
   }
 }
 
-export default BallCounter;
+export default Counter;
