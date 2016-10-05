@@ -18,6 +18,8 @@ generate(function*() {
     // Game over... how did you lose this game ><
     //  - Throwing away your only ball during the intro
     console.error("GAME OVER!");
-    console.error(error);
+    if(error) {
+      console.error(error);
+    }
   }
 });
