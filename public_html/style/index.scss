@@ -1,3 +1,39 @@
+@import 'colors';
+
 body {
   display: block;
+  text-align: center;
+}
+
+.container {
+  display: inline-block;
+  margin: 0 auto;
+  width: 120ch;
+  height: 100%;
+  text-align: left;
+}
+
+.pre {
+  position: relative;
+  font-family: monospace;
+  white-space: pre;
+
+  span.button {
+    box-sizing: border-box;
+    position: absolute;
+    white-space: pre;
+    overflow: hidden;
+    user-select: none;
+
+    &.normal, &.real {
+      cursor: pointer;
+    }
+    &.real {
+      background-color: $button-color;
+      border: 1px solid $button-border;
+      &:hover:not(:active) {
+        background-color: lighten($button-color, 5);
+      }
+    }
+  }
 }
