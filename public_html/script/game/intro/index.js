@@ -11,12 +11,11 @@
 import balls from '../../data/balls';
 import Display from '../../display';
 import { ButtonStyles } from '../../display/button';
+import { infoPopup } from '../../display/button-action';
 import wait from '../../util/wait';
 import pad from '../../util/pad';
 
-export default function*() {
-  const display = new Display();
-  const thrownCount = () => pad(`You have thrown away ${balls.thrown} ball${balls.thrown === 1 ? '' : 's'}.`, display.width);
+export default function*(display) {
   // wait 10 seconds for first ball
   const firstBall = wait(10000);
   display.text('Throw?', 0, 0).createButton( {
@@ -34,6 +33,7 @@ export default function*() {
         balls.throw();
         squeezeButton.cancel();
         display
+          .clear()
           .text(balls.toString(true), 0, 1)
           .text('You have thrown away your only ball.', 0, 2).removeButton();
       } }, ButtonStyles.Real );
@@ -50,7 +50,7 @@ export default function*() {
         balls.throw();
         display
           .text(balls.toString(true), 0, 1)
-          .text(thrownCount, 0, 3);
+          .text(balls.thrownString(true), 0, 3);
       } }, ButtonStyles.Real );
   yield balls.when(0);
   // all the balls have been thrown
@@ -73,7 +73,7 @@ export default function*() {
       Math.floor(Math.random() * 35) + 10
     ]).join('x')));
     ballsOnScreen.add(pos.join('x'));
-    display.text('O', pos[0], pos[1]);
+    display.text('o', pos[0], pos[1]);
     if(balls.amount < 10) {
       // can't pick up the new balls once you have 10
       display.createButton({
@@ -95,7 +95,7 @@ export default function*() {
         click() {
           // clear all the things
           balls.amount += ballsOnScreen.size;
-          display.destroy();
+          display.clear();
           resolve();
         }
       }, ButtonStyles.Real )
