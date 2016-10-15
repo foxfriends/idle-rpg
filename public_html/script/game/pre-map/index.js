@@ -13,6 +13,7 @@ import hole from '../../graphics/hole.aag';
 const DIG_BUTTON_LOCATION = [21, 13, 1, 1];
 
 export default function*(display) {
+  // TODO: rework all this because this was mostly to test the inventory thing
   display.text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real);
   yield balls.when.thrown(balls.thrown + 10); // throw 10 more balls
   const dig = new Promise((resolve) => {
@@ -23,15 +24,15 @@ export default function*(display) {
   });
   yield dig;
   display
-    .image(hole, DIG_BUTTON_LOCATION[0] - 1, DIG_BUTTON_LOCATION[1] - 1)
+    .image(hole, DIG_BUTTON_LOCATION[0], DIG_BUTTON_LOCATION[1] - 1)
     .removeButton()
-    .text('*', DIG_BUTTON_LOCATION[0], DIG_BUTTON_LOCATION[1])
+    .text('*', DIG_BUTTON_LOCATION[0] + 1, DIG_BUTTON_LOCATION[1])
     .createButton({
       click() { inventory.add(Items.Guitar); }
     });
   // click the * in the hole and get the guitar
   yield inventory.when(Items.Guitar);
   display
-    .image(hole, DIG_BUTTON_LOCATION[0] - 1, DIG_BUTTON_LOCATION[1] - 1)
+    .image(hole, DIG_BUTTON_LOCATION[0], DIG_BUTTON_LOCATION[1] - 1, true)
     .removeButton();
 }

@@ -88,7 +88,7 @@ class Counter extends EventListener {
   //    long form is even more human readable.
   toString(longForm = false) {
     return longForm ?
-      `You have ${this.amount} ${this[UNIT]}${this.amount === 1 ? '' : 's'} ` :
+      `You have ${this.amount} ${this[UNIT]}${this.amount === 1 ? '' : 's'}. ` :
       `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s: ${this.amount} `;
   }
 
@@ -97,7 +97,7 @@ class Counter extends EventListener {
   //    The long form is even more human readable.
   thrownString(longForm = false) {
     return longForm ?
-      `You have thrown away ${this.thrown} ${this[UNIT]}${this.thrown === 1 ? '' : 's'} ` :
+      `You have thrown away ${this.thrown} ${this[UNIT]}${this.thrown === 1 ? '' : 's'}. ` :
       `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s thrown: ${this.thrown} `;
   }
 }
