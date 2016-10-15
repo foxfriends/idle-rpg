@@ -23,10 +23,13 @@ body {
     position: absolute;
     white-space: pre;
     overflow: hidden;
-    user-select: none;
 
     &.normal, &.real {
+      user-select: none;
       cursor: pointer;
+    }
+    &.ninja {
+      cursor: text;
     }
     &.real {
       background-color: $button-color;
@@ -35,5 +38,16 @@ body {
         background-color: lighten($button-color, 5);
       }
     }
+  }
+
+  span.popup {
+    box-sizing: border-box;
+    position: absolute;
+    white-space: pre;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid black;
+    pointer-events: none;
+    transform: translateX(16px);
   }
 }

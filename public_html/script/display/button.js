@@ -15,15 +15,18 @@ const ButtonStyles = {
 };
 
 class Button {
-  // Button(actions: { enter: function, click: function, leave: function }, region: number[4], style: ButtonStyle = Normal);
+  // Button(actions: { enter?: function, move?: function: click?: function, leave?: function },
+  //        region: number[4],
+  //        style: ButtonStyle = Normal)
   constructor(actions, region, style = ButtonStyles.Normal) {
     this[REGION] = region;
     this[ACTIONS] = actions;
     this[ELEMENT] = document.createElement('SPAN');
     this[ELEMENT].classList.add('button', style);
-    this[ELEMENT].addEventListener('mouseover', (...args) => actions.enter && actions.enter(...args) );
-    this[ELEMENT].addEventListener('click', (...args) => actions.click && actions.click(...args) );
-    this[ELEMENT].addEventListener('mouseout', (...args) => actions.leave && actions.leave(...args) );
+    this[ELEMENT].addEventListener('mouseenter', (...args) => actions.enter && actions.enter(this, ...args) );
+    this[ELEMENT].addEventListener('mousemove', (...args) => actions.move && actions.move(this, ...args) );
+    this[ELEMENT].addEventListener('click', (...args) => actions.click && actions.click(this, ...args) );
+    this[ELEMENT].addEventListener('mouseleave', (...args) => actions.leave && actions.leave(this, ...args) );
     const h = FONT_HEIGHT;
     this[ELEMENT].style.width = `${region[2]}ch`;
     this[ELEMENT].style.height = `${region[3] * h}px`;

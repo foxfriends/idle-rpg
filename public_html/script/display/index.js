@@ -22,8 +22,7 @@ class Display {
     this[ELEMENT] = document.createElement('DIV');
     this[ELEMENT].classList.add('pre');
     this[BUTTONS] = [];
-    document.querySelector('#game').appendChild(this[ELEMENT]);
-    this.repaint();
+    this.attach();
   }
 
   // .width: number
@@ -85,17 +84,42 @@ class Display {
     return this;
   }
 
-  // .repaint(): void
+  // .repaint(): this
   //    refreshes the screen with the current content
   repaint() {
     this[ELEMENT].textContent = this[CONTENT].map((row) => row.join('')).join('\n');
     for(let button of this[BUTTONS]) { button.attach(this[ELEMENT]); }
+    return this;
   }
 
-  // .destroy(): void
+  // .remove(): this
   //    removes the display element from the DOM
-  destroy() {
+  remove() {
     this[ELEMENT].parentNode.removeChild(this[ELEMENT]);
+    return this;
+  }
+
+  // .attach(): this
+  //    attach the display element to the DOM (at the bottom)
+  attach() {
+    document.querySelector('#game').appendChild(this[ELEMENT]);
+    this.repaint();
+    return this;
+  }
+
+  // .hide(): this
+  //    hides the display element from the DOM, but does not remove it (saves
+  //    its position)
+  hide() {
+    this[ELEMENT].style.display = 'none';
+    return this;
+  }
+
+  // .show(): this
+  //    unhides the display element on DOM
+  show() {
+    this[ELEMENT].style.display = 'block';
+    return this;
   }
 
   // .createButton(
