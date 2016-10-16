@@ -17,4 +17,8 @@ function infoPopup(text) {
   };
 }
 
-export { infoPopup };
+function progress(deferred) {
+  return { click: deferred.resolve };
+}
+
+export { infoPopup, progress };
