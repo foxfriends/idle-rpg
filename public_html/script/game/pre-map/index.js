@@ -7,8 +7,8 @@ import inventory, { Items } from '../../data/items';
 import Display from '../../display';
 import { ButtonStyles } from '../../display/button';
 import wait from '../../util/wait';
-import arrow from '../../graphics/arrow.aag';
-import hole from '../../graphics/hole.aag';
+import arrow from 'graphics/arrow.aag';
+import hole from 'graphics/hole.aag';
 
 const DIG_BUTTON_LOCATION = [21, 13, 1, 1];
 

@@ -4,7 +4,7 @@
 import Item from './item';
 import Inventory from './inventory';
 
-import GUITAR from '../../graphics/items/guitar.aag';
+import GUITAR from 'graphics/items/guitar.aag';
 
 // All the Items that can be obtained
 const Items = {
