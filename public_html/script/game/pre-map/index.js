@@ -8,7 +8,7 @@ import Display from '../../display';
 import { ButtonStyles } from '../../display/button';
 import { progress } from '../../display/button-action';
 
-import PATH_IMAGE from '../../graphics/path.aag';
+import PATH_IMAGE from 'graphics/path.aag';
 
 import Deferred from '../../util/deferred';
 

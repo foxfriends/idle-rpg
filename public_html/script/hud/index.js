@@ -3,7 +3,7 @@
 
 import Display from '../display';
 import balls from '../data/balls';
-import HUD_IMAGE from '../graphics/hud/hud.aag';
+import HUD_IMAGE from 'graphics/hud/hud.aag';
 
 const [BUTTONS, DISPLAY, RENDER] = [Symbol(), Symbol(), Symbol()];
 

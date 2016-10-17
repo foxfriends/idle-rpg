@@ -15,8 +15,8 @@ import Hud from '../hud';
 import HudButton from '../hud/button';
 import Display from '../display';
 // HUD Button images
-import HOME_BUTTON from '../graphics/hud/home.aag';
-import INV_BUTTON from '../graphics/hud/inv.aag';
+import HOME_BUTTON from 'graphics/hud/home.aag';
+import INV_BUTTON from 'graphics/hud/inv.aag';
 
 let currentDisplay = null;
 // setCurrentDisplay(display: Display): void
