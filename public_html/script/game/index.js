@@ -3,12 +3,12 @@
 import generate from '../util/generate';
 
 // initialize data
-import '../data/balls';
+import balls from '../data/balls';
 import inventory from  '../data/items';
 
 // get the different states
 import intro from './intro';
-import preMap from './pre-map';
+import ballPath from './ball-path';
 
 // game systems
 import Hud from '../hud';
@@ -17,6 +17,7 @@ import Display from '../display';
 // HUD Button images
 import HOME_BUTTON from 'graphics/hud/home.aag';
 import INV_BUTTON from 'graphics/hud/inv.aag';
+import MAP_BUTTON from 'graphics/hud/map.aag';
 
 let currentDisplay = null;
 // setCurrentDisplay(display: Display): void
@@ -32,22 +33,27 @@ function setCurrentDisplay(display) {
 generate(function*() {
   try {
     // create all the displays here, and pass them to the state functions as needed
+    // TODO#2: move display creation and setCurrentDisplay to their own module
     const hud = new Hud().hide();
     const invDisplay = new Display().hide();
+    const mapDisplay = new Display().hide();
     const homeDisplay = new Display();
     setCurrentDisplay(homeDisplay);
     yield* intro(homeDisplay);
     hud.show();
+    yield* ballPath(homeDisplay);
+    hud.addButton(new HudButton([30, 1], HOME_BUTTON, setCurrentDisplay.bind(null, homeDisplay)));
+    hud.addButton(new HudButton([40, 1], MAP_BUTTON, setCurrentDisplay.bind(null, mapDisplay)));
     inventory.once('add', () => {
-      // add inventory and home button once the inventory has something in it
-      hud.addButton(new HudButton([30, 1], HOME_BUTTON, setCurrentDisplay.bind(null, homeDisplay)));
+      // add inventory button once the inventory has something in it
       hud.addButton(new HudButton([30, 4], INV_BUTTON, setCurrentDisplay.bind(null, invDisplay)));
     });
     inventory.on('add', () => inventory.render(invDisplay));
-    yield* preMap(homeDisplay);
+    balls.on('change', () => homeDisplay.text(balls.thrownString(true), 1, 2));
+    setCurrentDisplay(mapDisplay);
   } catch(error) {
     // game over... how did you lose this game ><
-    //  - Throwing away your only ball during the intro
+    //  - throw away your only ball during the intro
     console.error("GAME OVER!");
     if(error) {
       console.error(error);

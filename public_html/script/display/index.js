@@ -39,7 +39,7 @@ class Display {
   //    by default. Ensure images are saved with Unix file endings (LF, not
   //    CRLF) or there will be too much spacing.
   image(img, x, y, showBack = false, background = ' ') {
-    img = normalizeNewline(img);
+    img = normalizeNewline(img.toString());
     const lines = img.split('\n');
     if(lines[lines.length - 1] === '') { --lines.length; } // remove final empty line
     const width = lines.reduce((longest, line) => Math.max(longest, line.length), 0);
@@ -60,7 +60,7 @@ class Display {
 
   // .text(str: string | () => string, x: number, y: number): this
   //    draws str or the value returned by str at the given location
-  text(str, x, y) { return this.image(typeof str === 'function' ? str() : str, x, y, true); }
+  text(str, x, y) { return this.image(typeof str === 'function' ? str().toString() : str.toString(), x, y, true); }
 
   // .fill(char: string, x: number, y: number, w: number, h: number): this
   //    fills the given region with a character

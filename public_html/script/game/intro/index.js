@@ -12,19 +12,19 @@ import balls from '../../data/balls';
 import Display from '../../display';
 import { ButtonStyles } from '../../display/button';
 import { infoPopup } from '../../display/button-action';
-import wait from '../../util/wait';
+import Wait from '../../util/wait';
 import pad from '../../util/pad';
 
 export default function*(display) {
   // wait 10 seconds for first ball
-  const firstBall = wait(10000);
+  const firstBall = new Wait(10000);
   display.text('Throw?', 0, 0).createButton( {
     click() { firstBall.reset(); }
   }, ButtonStyles.Real );
   yield firstBall;
   balls.amount = 1;
   // wait 10 seconds for more options
-  const squeezeButton = wait(10000);
+  const squeezeButton = new Wait(10000);
   display.clear()
     .text('A ball falls from the sky.', 0, 0)
     .text(balls.toString(true), 0, 1)

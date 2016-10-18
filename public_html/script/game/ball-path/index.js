@@ -1,4 +1,4 @@
-// The pre-map stage:
+// The ball-path stage:
 //  - Throw balls, which form a path
 //  - Once enough balls are thrown, can walk down the path to a town
 //  - Get enough balls to eventually buy a map
@@ -30,4 +30,9 @@ export default function*(display) {
     .text('-->', 117, 40)
     .createButton(progress(followPath), undefined, [117, 38, 3, 4]);
   yield followPath;
+  // remove the path from the home screen
+  display
+    .clear()
+    .text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real)
+    .text(balls.thrownString(true), 1, 2);
 }
