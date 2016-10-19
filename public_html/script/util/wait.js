@@ -8,6 +8,7 @@ const [TIMEOUT, RESOLVER, REJECTOR, TIME] = [Symbol(), Symbol(), Symbol(), Symbo
 class Wait extends Promise {
   constructor(time) {
     if(typeof time === 'function') {
+      // must support standard promise syntax for chaining
       super(time);
     } else {
       let resolve, reject;

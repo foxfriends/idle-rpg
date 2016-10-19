@@ -10,6 +10,7 @@ class Deferred extends Promise {
     super((res, rej) => {
       resolve = res;
       reject = rej;
+      // must support standard promise resolving for chaining
       resolver(resolve, reject);
     });
     this[RESOLVER] = resolve;
