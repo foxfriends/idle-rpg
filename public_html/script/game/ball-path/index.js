@@ -1,7 +1,6 @@
 // The ball-path stage:
 //  - Throw balls, which form a path
 //  - Once enough balls are thrown, can walk down the path to a town
-//  - Get enough balls to eventually buy a map
 'use strict';
 import balls from '../../data/balls';
 import Display from '../../display';
