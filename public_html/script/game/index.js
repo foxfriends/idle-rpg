@@ -14,11 +14,12 @@ import ballPath from './ball-path';
 import Hud from '../hud';
 import HudButton from '../hud/button';
 import Display from '../display';
-// HUD Button images
+// HUD button images
 import HOME_BUTTON from 'graphics/hud/home.aag';
 import INV_BUTTON from 'graphics/hud/inv.aag';
 import MAP_BUTTON from 'graphics/hud/map.aag';
 
+// TODO#2: create a display state management module
 let currentDisplay = null;
 // setCurrentDisplay(display: Display): void
 //    hides the previous display and shows the given one instead
@@ -33,7 +34,7 @@ function setCurrentDisplay(display) {
 generate(function*() {
   try {
     // create all the displays here, and pass them to the state functions as needed
-    // TODO#2: move display creation and setCurrentDisplay to their own module
+    // TODO#2: move display creation to the state management module
     const hud = new Hud().hide();
     const invDisplay = new Display().hide();
     const mapDisplay = new Display().hide();
