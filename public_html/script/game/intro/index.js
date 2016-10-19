@@ -12,19 +12,19 @@ import balls from '../../data/balls';
 import Display from '../../display';
 import { ButtonStyles } from '../../display/button';
 import { infoPopup } from '../../display/button-action';
-import wait from '../../util/wait';
+import Wait from '../../util/wait';
 import pad from '../../util/pad';
 
 export default function*(display) {
   // wait 10 seconds for first ball
-  const firstBall = wait(10000);
+  const firstBall = new Wait(10000);
   display.text('Throw?', 0, 0).createButton( {
     click() { firstBall.reset(); }
   }, ButtonStyles.Real );
   yield firstBall;
   balls.amount = 1;
   // wait 10 seconds for more options
-  const squeezeButton = wait(10000);
+  const squeezeButton = new Wait(10000);
   display.clear()
     .text('A ball falls from the sky.', 0, 0)
     .text(balls.toString(true), 0, 1)
@@ -39,6 +39,7 @@ export default function*(display) {
       } }, ButtonStyles.Real );
   yield squeezeButton;
   // show the squeeze button
+  // TODO#1: make this a 'progress' button when that helper is created
   display.text('Squeeze', 0, 3).createButton( { click() { balls.amount = 2; } }, ButtonStyles.Real );
   yield balls.when(2);
   // wait for the player to throw away the balls
@@ -88,6 +89,7 @@ export default function*(display) {
   });
   const counter = balls.on('change', () => display.text(balls.toString(true), 0, 1));
   yield balls.when(10);
+  // TODO#1: make this a 'progress' button when the helper function is created
   yield new Promise((resolve) => {
     display
       .text(`You can't carry any more balls.`, 0, 6)

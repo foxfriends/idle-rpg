@@ -4,12 +4,8 @@
 import Item from './item';
 import Inventory from './inventory';
 
-import GUITAR from 'graphics/items/guitar.aag';
-
 // All the Items that can be obtained
-const Items = {
-  Guitar: new Item('Guitar', 'An old guitar you\nfound in a hole.', GUITAR)
-};
+const Items = {};
 
 export default new Inventory();
 export { Items };

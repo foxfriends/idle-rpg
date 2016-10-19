@@ -3,29 +3,43 @@
 //    the timer.
 'use strict';
 
-function wait(time) {
-  let timeout, res, rej;
-  const pr = new Promise((resolve, reject) => {
-    timeout = window.setTimeout(resolve, time);
-    res = resolve;
-    rej = reject;
-  });
-  pr.cancel = () => {
-    window.clearTimeout(timeout);
-    rej();
-    return pr;
-  };
-  pr.skip = () => {
-    window.clearTimeout(timeout);
-    res();
-    return pr;
-  };
-  pr.reset = () => {
-    window.clearTimeout(timeout);
-    timeout = window.setTimeout(res, time);
-    return pr;
-  };
-  return pr;
+const [TIMEOUT, RESOLVER, REJECTOR, TIME] = [Symbol(), Symbol(), Symbol(), Symbol()];
+
+class Wait extends Promise {
+  constructor(time) {
+    if(typeof time === 'function') {
+      // must support standard promise syntax for chaining
+      super(time);
+    } else {
+      let resolve, reject;
+      super((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+      this[RESOLVER] = resolve;
+      this[REJECTOR] = reject;
+      this[TIME] = time;
+      this[TIMEOUT] = window.setTimeout(resolve, this[TIME]);
+    }
+  }
+
+  cancel() {
+    this[REJECTOR]();
+    window.clearTimeout(this[TIMEOUT]);
+    return this;
+  }
+
+  skip() {
+    this[RESOLVER]();
+    window.clearTimeout(this[TIMEOUT]);
+    return this;
+  }
+
+  reset() {
+    window.clearTimeout(this[TIMEOUT]);
+    this[TIMEOUT] = window.setTimeout(this[RESOLVER], this[TIME]);
+    return this;
+  }
 }
 
-export default wait;
+export default Wait;
