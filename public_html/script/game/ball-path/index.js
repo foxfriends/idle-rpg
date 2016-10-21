@@ -3,9 +3,9 @@
 //  - Once enough balls are thrown, can walk down the path to a town
 'use strict';
 import balls from '../../data/balls';
-import Display from '../../display';
 import { ButtonStyles } from '../../display/button';
 import { progress } from '../../display/button-action';
+import { home as display } from '../displays';
 
 import PATH_IMAGE from 'graphics/path.aag';
 
@@ -13,7 +13,7 @@ import Deferred from '../../util/deferred';
 
 const pathParts = PATH_IMAGE.split(/[oO0]/);
 
-export default function*(display) {
+export default function*() {
   // throw balls
   display.text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real);
   const before = balls.thrown;

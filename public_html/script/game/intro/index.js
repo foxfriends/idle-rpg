@@ -14,8 +14,9 @@ import { ButtonStyles } from '../../display/button';
 import { infoPopup } from '../../display/button-action';
 import Wait from '../../util/wait';
 import pad from '../../util/pad';
+import { home as display } from '../displays';
 
-export default function*(display) {
+export default function*() {
   // wait 10 seconds for first ball
   const firstBall = new Wait(10000);
   display.text('Throw?', 0, 0).createButton( {

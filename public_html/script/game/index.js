@@ -11,47 +11,31 @@ import intro from './intro';
 import ballPath from './ball-path';
 
 // game systems
-import Hud from '../hud';
 import HudButton from '../hud/button';
-import Display from '../display';
+import * as display from './displays';
 // HUD button images
 import HOME_BUTTON from 'graphics/hud/home.aag';
 import INV_BUTTON from 'graphics/hud/inv.aag';
 import MAP_BUTTON from 'graphics/hud/map.aag';
 
-// TODO#2: create a display state management module
-let currentDisplay = null;
-// setCurrentDisplay(display: Display): void
-//    hides the previous display and shows the given one instead
-function setCurrentDisplay(display) {
-  if(currentDisplay) {
-    currentDisplay.hide();
-  }
-  currentDisplay = display.show();
-}
-
 // put the states in order
 generate(function*() {
   try {
     // create all the displays here, and pass them to the state functions as needed
-    // TODO#2: move display creation to the state management module
-    const hud = new Hud().hide();
-    const invDisplay = new Display().hide();
-    const mapDisplay = new Display().hide();
-    const homeDisplay = new Display();
-    setCurrentDisplay(homeDisplay);
-    yield* intro(homeDisplay);
-    hud.show();
-    yield* ballPath(homeDisplay);
-    hud.addButton(new HudButton([30, 1], HOME_BUTTON, setCurrentDisplay.bind(null, homeDisplay)));
-    hud.addButton(new HudButton([40, 1], MAP_BUTTON, setCurrentDisplay.bind(null, mapDisplay)));
+    display.set(display.home);
+    yield* intro();
+    display.hud.show();
+    yield* ballPath();
+    // TODO#3: make these addButton things internal to the Hud, and expose unlock methods instead
+    display.hud.addButton(new HudButton([30, 1], HOME_BUTTON, display.set.bind(null, display.home)));
+    display.hud.addButton(new HudButton([40, 1], MAP_BUTTON, display.set.bind(null, display.map)));
     inventory.once('add', () => {
       // add inventory button once the inventory has something in it
-      hud.addButton(new HudButton([30, 4], INV_BUTTON, setCurrentDisplay.bind(null, invDisplay)));
+      display.hud.addButton(new HudButton([30, 4], INV_BUTTON, display.set.bind(null, display.ind)));
     });
-    inventory.on('add', () => inventory.render(invDisplay));
-    balls.on('change', () => homeDisplay.text(balls.thrownString(true), 1, 2));
-    setCurrentDisplay(mapDisplay);
+    inventory.on('add', () => inventory.render(display.inv));
+    balls.on('change', () => display.home.text(balls.thrownString(true), 1, 2));
+    display.set(display.map);
   } catch(error) {
     // game over... how did you lose this game ><
     //  - throw away your only ball during the intro
