@@ -31,7 +31,7 @@ generate(function*() {
     display.hud.addButton(new HudButton([40, 1], MAP_BUTTON, display.set.bind(null, display.map)));
     inventory.once('add', () => {
       // add inventory button once the inventory has something in it
-      display.hud.addButton(new HudButton([30, 4], INV_BUTTON, display.set.bind(null, display.ind)));
+      display.hud.addButton(new HudButton([30, 4], INV_BUTTON, display.set.bind(null, display.inv)));
     });
     inventory.on('add', () => inventory.render(display.inv));
     balls.on('change', () => display.home.text(balls.thrownString(true), 1, 2));
