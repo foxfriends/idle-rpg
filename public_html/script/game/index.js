@@ -11,8 +11,8 @@ import intro from './intro';
 import ballPath from './ball-path';
 
 // game systems
-import HudButton from '../hud/button';
 import * as display from './displays';
+import Hud from '../hud';
 // HUD button images
 import HOME_BUTTON from 'graphics/hud/home.aag';
 import INV_BUTTON from 'graphics/hud/inv.aag';
@@ -21,17 +21,18 @@ import MAP_BUTTON from 'graphics/hud/map.aag';
 // put the states in order
 generate(function*() {
   try {
+    const hud = new Hud().hide();
     // create all the displays here, and pass them to the state functions as needed
     display.set(display.home);
     yield* intro();
-    display.hud.show();
+    hud.show();
     yield* ballPath();
-    // TODO#3: make these addButton things internal to the Hud, and expose unlock methods instead
-    display.hud.addButton(new HudButton([30, 1], HOME_BUTTON, display.set.bind(null, display.home)));
-    display.hud.addButton(new HudButton([40, 1], MAP_BUTTON, display.set.bind(null, display.map)));
+    hud
+      .unlock(Hud.Feature.HomeButton)
+      .unlock(Hud.Feature.MapButton);
     inventory.once('add', () => {
       // add inventory button once the inventory has something in it
-      display.hud.addButton(new HudButton([30, 4], INV_BUTTON, display.set.bind(null, display.inv)));
+      hud.unlock(Hud.InvButton);
     });
     inventory.on('add', () => inventory.render(display.inv));
     balls.on('change', () => display.home.text(balls.thrownString(true), 1, 2));

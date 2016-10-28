@@ -8,7 +8,7 @@ const [DIMENSIONS, CONTENT, ELEMENT, PREV_LOC, BUTTONS] = [Symbol(), Symbol(), S
 //    images and text
 class Display {
   // new Display(width: number = 120, height: number = 45)
-  //    creates a new display area with the given dimensions.
+  //    creates a new display area with the given dimensions
   constructor(width = 120, height = 45) {
     this[DIMENSIONS] = { width: width, height: height };
     this[PREV_LOC] = [0, 0, 0, 0];
@@ -99,10 +99,11 @@ class Display {
     return this;
   }
 
-  // .attach(): this
-  //    attach the display element to the DOM (at the bottom)
-  attach() {
-    document.querySelector('#game').appendChild(this[ELEMENT]);
+  // .attach(prepend: boolean = false): this
+  //    attach the display element to the DOM
+  attach(prepend = false) {
+    const game = document.querySelector('#game');
+    game[prepend ? 'insertBefore' : 'appendChild'](this[ELEMENT], game.firstChild);
     this.repaint();
     return this;
   }

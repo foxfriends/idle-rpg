@@ -14,10 +14,9 @@ function set(display) {
 }
 
 // the Displays (including the HUD, while technically not an actual Display)
-const hud = new Hud().hide();
 const inv = new Display().hide();
 const map = new Display().hide();
 const home = new Display();
 
 export default set;
-export { hud, inv, map, home, set };
+export { inv, map, home, set };
