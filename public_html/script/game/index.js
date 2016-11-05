@@ -9,6 +9,7 @@ import inventory from  '../data/items';
 // get the different states
 import intro from './intro';
 import ballPath from './ball-path';
+import town from './town';
 
 // game systems
 import * as display from './displays';
@@ -37,6 +38,7 @@ generate(function*() {
     inventory.on('add', () => inventory.render(display.inv));
     balls.on('change', () => display.home.text(balls.thrownString(true), 1, 2));
     display.set(display.map);
+    yield* town();
   } catch(error) {
     // game over... how did you lose this game ><
     //  - throw away your only ball during the intro
