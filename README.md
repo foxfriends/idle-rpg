@@ -48,3 +48,5 @@ Try to keep the code consistent - basically don't make it ugly. Specifics are he
 *   write some comments where the code is not self-descriptive
     *   also put a brief description of what a file is for at the top
     *   if you can't describe it briefly it's probably supposed to be broken up more
+*   Use the linters and follow their suggestions when possible
+    *   Hint: Install jshint and sass-lint packages for Atom

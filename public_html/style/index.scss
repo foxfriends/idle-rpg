@@ -15,39 +15,47 @@ body {
 
 .pre {
   position: relative;
-  font-family: monospace;
   white-space: pre;
+  font-family: monospace;
+}
 
-  span.button {
-    box-sizing: border-box;
+span {
+  &.button {
     position: absolute;
-    white-space: pre;
     overflow: hidden;
+    white-space: pre;
+    box-sizing: border-box;
 
-    &.normal, &.real {
-      user-select: none;
+    &.normal,
+    &.real {
       cursor: pointer;
+      user-select: none;
     }
+
     &.ninja {
       cursor: text;
     }
+
     &.real {
-      background-color: $button-color;
       border: 1px solid $button-border;
-      &:hover:not(:active) {
-        background-color: lighten($button-color, 5);
+      background-color: $button-color;
+
+      &:hover {
+        :not(:active) {
+          background-color: lighten($button-color, 5);
+        }
       }
     }
   }
 
-  span.popup {
-    box-sizing: border-box;
+  &.popup {
     position: absolute;
-    white-space: pre;
-    overflow: hidden;
-    background-color: white;
-    border: 1px solid black;
-    pointer-events: none;
     transform: translateX(16px);
+    border: 1px solid $text-color;
+    background-color: $page-bg;
+    overflow: hidden;
+    white-space: pre;
+    pointer-events: none;
+    box-sizing: border-box;
   }
 }
