@@ -33,6 +33,13 @@ class Display {
   //    the height of the display
   get height() { return this[DIMENSIONS].height; }
 
+  // .pipe(fn: (d: Display) => void)): this
+  //    pipes the display through a function that continues the drawing process
+  pipe(fn) {
+    fn(this);
+    return this;
+  }
+
   // .image(img: ASCIIArt, x: number, y: number): this
   //    places the img at the specified position in the display area,
   //    overwriting previous content. The background character is not drawn
@@ -123,7 +130,7 @@ class Display {
     return this;
   }
 
-  // .createButton(
+  // .button(
   //    actions: { enter: function, click: function, leave: function },
   //    style: ButtonStyle = ButtonStyles.Normal
   //    region: number[4] = this[PREV_LOC],
@@ -131,7 +138,7 @@ class Display {
   //    creates a button over the given region, or the most recently drawn image
   //    or block of text if a region is not specified, which performs the
   //    actions on mouseover, click, and mouseout
-  createButton(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
+  button(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
     this[BUTTONS].push(new Button(actions, region, style));
     this.repaint();
     return this;

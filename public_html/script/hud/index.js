@@ -1,7 +1,6 @@
 // Manage the HUD, showing the number of balls, menus, and other things.
 'use strict';
 
-import Display from '../display';
 import * as display from '../game/displays';
 import balls from '../data/balls';
 import HudButton from './button';
@@ -21,9 +20,9 @@ const FEATURES = {
 };
 
 class Hud {
-  // new Hud()
-  constructor() {
-    this[DISPLAY] = new Display(120, 8, true);
+  // new Hud(display: Display)
+  constructor(display) {
+    this[DISPLAY] = display;
     this[DISPLAY].remove().attach(true);
 
     balls.on('change', () => {
@@ -50,7 +49,7 @@ class Hud {
     for(let button of this[BUTTONS]) {
       this[DISPLAY]
         .image(button.image, ...button.pos)
-        .createButton({ click: button.click });
+        .button({ click: button.click });
     }
   }
 
