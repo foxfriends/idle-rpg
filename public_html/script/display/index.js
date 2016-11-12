@@ -88,6 +88,7 @@ class Display {
     this[CONTENT] = this[CONTENT].map((c) => c.map(() => char));
     this[PREV_LOC] = [0, 0, 0, 0];
     this[BUTTONS] = [];
+    this.repaint();
     return this;
   }
 
@@ -139,6 +140,7 @@ class Display {
   //    or block of text if a region is not specified, which performs the
   //    actions on mouseover, click, and mouseout
   button(actions, style = ButtonStyles.Normal, region = this[PREV_LOC]) {
+    // TODO#4: rethink how buttons work
     this[BUTTONS].push(new Button(actions, region, style));
     this.repaint();
     return this;

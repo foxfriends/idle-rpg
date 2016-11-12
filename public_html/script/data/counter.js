@@ -13,7 +13,7 @@ class Counter extends EventListener {
   //  change - any time the ball count changes
 
   // new Counter(unit: string = 'ball')
-  constructor(unit = 'ball') {
+  constructor(unit = 'ball') { // TODO#5: i18n
     super();
     this[UNIT] = unit;
     this[RATE] = 0;
@@ -87,6 +87,7 @@ class Counter extends EventListener {
   //    returns a human readable description of how many balls you have. The
   //    long form is even more human readable.
   toString(longForm = false) {
+    // TODO#5: i18n
     return longForm ?
       `You have ${this.amount} ${this[UNIT]}${this.amount === 1 ? '' : 's'}. ` :
       `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s: ${this.amount} `;
@@ -96,6 +97,7 @@ class Counter extends EventListener {
   //    returns a human readable description of how many balls you have thrown.
   //    The long form is even more human readable.
   thrownString(longForm = false) {
+    // TODO#5: i18n
     return longForm ?
       `You have thrown away ${this.thrown} ${this[UNIT]}${this.thrown === 1 ? '' : 's'}. ` :
       `${this[UNIT][0].toUpperCase()}${this[UNIT].slice(1)}s thrown: ${this.thrown} `;

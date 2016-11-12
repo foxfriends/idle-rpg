@@ -42,7 +42,7 @@ span {
       background-color: $button-color;
 
       &:hover {
-        :not(:active) {
+        &:not(:active) {
           background-color: lighten($button-color, 5);
         }
       }

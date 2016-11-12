@@ -20,16 +20,22 @@ const FEATURES = {
 };
 
 class Hud {
-  // new Hud(display: Display)
-  constructor(display) {
-    this[DISPLAY] = display;
-    this[DISPLAY].remove().attach(true);
-
+  // new Hud()
+  constructor() {
     balls.on('change', () => {
-      this[DISPLAY].text(balls.toString(), 2, 1);
+      if(this[DISPLAY]) {
+        this[DISPLAY].text(balls.toString(), 2, 1);
+      }
     });
-
     this[BUTTONS] = [];
+  }
+
+  // .attach(display: Display): this
+  //    sets the Display that this Hud will draw on
+  attach(display) {
+    this[DISPLAY] = display;
+    this[RENDER]();
+    return this;
   }
 
   // .unlock(button: HudButton): void
@@ -90,6 +96,8 @@ class Hud {
   static get Feature() {
     return FEATURES;
   }
+
+  get Feature() { return Hud.Feature; }
 }
 
-export default Hud;
+export default new Hud();

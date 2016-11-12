@@ -15,7 +15,7 @@ const pathParts = PATH_IMAGE.split(/[oO0]/);
 
 export default function*() {
   // throw balls
-  display.text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real);
+  display.text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real); // TODO#5: i18n
   const before = balls.thrown;
   const pathBuilder = balls.on('throw', () => {
     const parts = balls.thrown - before;
@@ -32,6 +32,6 @@ export default function*() {
   // remove the path from the home screen
   display
     .clear()
-    .text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real)
+    .text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real) // TODO#5: i18n
     .text(balls.thrownString(true), 1, 2);
 }

@@ -19,7 +19,7 @@ import { home as display } from '../displays';
 export default function*() {
   // wait 10 seconds for first ball
   const firstBall = new Wait(10000);
-  display.text('Throw?', 0, 0).createButton( {
+  display.text('Throw?', 0, 0).createButton( { // TODO#5: i18n
     click() { firstBall.reset(); }
   }, ButtonStyles.Real );
   yield firstBall;
@@ -27,27 +27,27 @@ export default function*() {
   // wait 10 seconds for more options
   const squeezeButton = new Wait(10000);
   display.clear()
-    .text('A ball falls from the sky.', 0, 0)
+    .text('A ball falls from the sky.', 0, 0) // TODO#5: i18n
     .text(balls.toString(true), 0, 1)
-    .text('Throw', 0, 2).createButton( {
+    .text('Throw', 0, 2).createButton( { // TODO#5: i18n
       click() {
         balls.throw();
         squeezeButton.cancel();
         display
           .clear()
           .text(balls.toString(true), 0, 1)
-          .text('You have thrown away your only ball.', 0, 2).removeButton();
+          .text('You have thrown away your only ball.', 0, 2).removeButton(); // TODO#5: i18n
       } }, ButtonStyles.Real );
   yield squeezeButton;
   // show the squeeze button
   // TODO#1: make this a 'progress' button when that helper is created
-  display.text('Squeeze', 0, 3).createButton( { click() { balls.amount = 2; } }, ButtonStyles.Real );
+  display.text('Squeeze', 0, 3).createButton( { click() { balls.amount = 2; } }, ButtonStyles.Real ); // TODO#5: i18n
   yield balls.when(2);
   // wait for the player to throw away the balls
   display.clear()
-    .text('You squeeze the ball, and another one pops out.', 0, 0)
+    .text('You squeeze the ball, and another one pops out.', 0, 0) // TODO#5: i18n
     .text(balls.toString(true), 0, 1)
-    .text('Throw', 0, 2).createButton( {
+    .text('Throw', 0, 2).createButton( { // TODO#5: i18n
       click() {
         balls.throw();
         display
@@ -56,7 +56,7 @@ export default function*() {
       } }, ButtonStyles.Real );
   yield balls.when(0);
   // all the balls have been thrown
-  display.text('The balls roll away together.', 0, 4);
+  display.text('The balls roll away together.', 0, 4); // TODO#5: i18n
   // reproduction starts
   const ballsOnScreen = new Set();
   let makeBall = true;
@@ -65,9 +65,9 @@ export default function*() {
     if(!(makeBall = !makeBall)) { return; }
     if(ballsOnScreen.size >= 50) {
       // limit balls to 50 on the ground
-      return display.text(pad('There are balls everywhere.', display.width), 0, 5);
+      return display.text(pad('There are balls everywhere.', display.width), 0, 5); // TODO#5: i18n
     }
-    display.text(pad('The balls start to reproduce.', display.width), 0, 5);
+    display.text(pad('The balls start to reproduce.', display.width), 0, 5); // TODO#5: i18n
     // add a ball to the screen
     let pos;
     while(ballsOnScreen.has((pos = [

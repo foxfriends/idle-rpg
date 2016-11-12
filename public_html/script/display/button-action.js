@@ -1,5 +1,6 @@
 // Some common behaviours for buttons to have
 'use strict';
+import map from '../map';
 
 // infoPopup(text: string): ButtonAction
 //    makes a button action that shows some text in a popup when the mouse is
@@ -26,19 +27,25 @@ function progress(deferred) {
   return { click: deferred.resolve };
 }
 
+// setLocation(location: string): ButtonAction
+//    makes a button action that sets the current location of the map
+function setLocation(location) {
+  return { click() { map.location = location; } };
+}
+
 // combine(...buttons: ButtonAction[]): ButtonAction
 //    combines multiple button actions into one
 function combine(...buttons) {
   return new Proxy({}, {
     get(target, prop) {
-      return () => {
+      return (...args) => {
         for(let button of buttons) {
           const noop = () => {};
-          (button[prop] || noop)();
+          (button[prop] || noop)(...args);
         }
       };
     }
   });
 }
 
-export { infoPopup, progress };
+export { infoPopup, progress, setLocation, combine };
