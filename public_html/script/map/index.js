@@ -2,16 +2,16 @@
 //     display
 'use strict';
 
+import { ButtonStyles } from '../display/button';
 import { infoPopup as info, setLocation, combine } from '../display/button-action';
 
-import { ButtonStyles } from '../display/button';
 import HOUSE_NORMAL from 'graphics/town/house/normal.aag';
 import HOUSE_REVERSE from 'graphics/town/house/reverse.aag';
 import HOUSE_GARDEN from 'graphics/town/house/garden.aag';
 import HOUSE_DOUBLE from 'graphics/town/house/double.aag';
+import TOWNHALL from 'graphics/town/town-hall.aag';
 import SHOPFRONT from 'graphics/town/shop/outside.aag';
 import SHOP from 'graphics/town/shop/inside.aag';
-import TOWNHALL from 'graphics/town/town-hall.aag';
 
 const [DISPLAY, LOCATION, RENDER] = [Symbol(), Symbol(), Symbol()];
 
