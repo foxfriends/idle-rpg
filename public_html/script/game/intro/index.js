@@ -94,7 +94,7 @@ export default function*() {
   yield new Promise((resolve) => {
     display
       .text(`You can't carry any more balls.`, 0, 6)
-      .text('Organize', 0, 2).createButton({
+      .text('Organize', 0, 2).removeButton().createButton({
         click() {
           // clear all the things
           balls.amount += ballsOnScreen.size;
@@ -107,6 +107,5 @@ export default function*() {
   });
   balls.off('change', counter);
   balls.off('tick', ticker);
-  balls.rate = 0.5;
   // intro is over!
 }

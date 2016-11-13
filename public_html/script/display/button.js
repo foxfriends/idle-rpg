@@ -2,7 +2,7 @@
 //    mouse events.
 'use strict';
 import { FONT_HEIGHT } from '../const';
-const [REGION, ACTIONS, ELEMENT] = [Symbol(), Symbol(), Symbol()];
+const [REGION, ACTIONS, ELEMENTS] = [Symbol(), Symbol(), Symbol()];
 
 // Styles for buttons:
 //  Normal - pointer cursor, no border/background
@@ -22,31 +22,32 @@ class Button {
   constructor(actions, region, style = ButtonStyles.Normal) {
     this[REGION] = region;
     this[ACTIONS] = actions;
-    this[ELEMENT] = document.createElement('SPAN');
-    this[ELEMENT].classList.add('button', style);
-    this[ELEMENT].addEventListener('mouseenter', (...args) => actions.enter && actions.enter(this, ...args) );
-    this[ELEMENT].addEventListener('mousemove', (...args) => actions.move && actions.move(this, ...args) );
-    this[ELEMENT].addEventListener('click', (...args) => actions.click && actions.click(this, ...args) );
-    this[ELEMENT].addEventListener('mouseleave', (...args) => actions.leave && actions.leave(this, ...args) );
     const h = FONT_HEIGHT;
-    this[ELEMENT].style.width = `${region[2]}ch`;
-    this[ELEMENT].style.height = `${region[3] * h}px`;
-    this[ELEMENT].style.left = `${region[0]}ch`;
-    this[ELEMENT].style.top = `${region[1] * h - 1}px`;
+    this[ELEMENTS] = [];
+    for(let i = 0; i < this[REGION][3]; ++i) {
+      const el = document.createElement('SPAN');
+      el.classList.add('button', style);
+      el.addEventListener('mouseenter', (...args) => actions.enter && actions.enter(this, ...args) );
+      el.addEventListener('mousemove', (...args) => actions.move && actions.move(this, ...args) );
+      el.addEventListener('click', (...args) => actions.click && actions.click(this, ...args) );
+      el.addEventListener('mouseleave', (...args) => actions.leave && actions.leave(this, ...args) );
+      this[ELEMENTS].push(el);
+    }
+    this[ELEMENTS][0].classList.add('top');
+    this[ELEMENTS][this[ELEMENTS].length - 1].classList.add('bot');
   }
 
-  // .attach(display: HTMLDivElement): void
-  //    adds the actual interactive area for this button over the text as an
-  //    overlay on the given div
-  attach(display) {
-    if(this[ELEMENT].classList.contains('real')) {
-      const lines = display.textContent.split('\n');
-      this[ELEMENT].textContent = '';
-      for(let i = 0; i < this[REGION][3]; ++i) {
-        this[ELEMENT].textContent += lines[this[REGION][1] + i].substr(this[REGION][0], this[REGION][2]) + '\n';
-      }
+  // .getElements(display: HTMLDivElement): [number, HTMLSpanElement][]
+  //    sets the text contents of all the elements and returns them paired with
+  //    their index in the raw text content string as an array
+  getElements(display) {
+    const lines = display.textContent.split('\n');
+    for(let i = 0; i < this[ELEMENTS].length; ++i) {
+      const el = this[ELEMENTS][i];
+      el.textContent = lines[this[REGION][1] + i].substr(this[REGION][0], this[REGION][2]);
     }
-    display.appendChild(this[ELEMENT]);
+    const lineLength = lines[0].length;
+    return this[ELEMENTS].map((e, i) => [this[REGION][0] + (this[REGION][1] + i) * (lineLength + 1), e]);
   }
 
   // .intersects(region: number[4]): bool

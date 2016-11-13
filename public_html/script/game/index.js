@@ -28,6 +28,7 @@ generate(function*() {
     // yield* intro();
     // create the hud and attach it to its display
     hud.attach(display.hud);
+    balls.rate = 0.5;
     hud.show();
     // yield* ballPath();
     hud

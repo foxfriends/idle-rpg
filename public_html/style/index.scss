@@ -22,10 +22,8 @@ body {
 
 span {
   &.button {
-    position: absolute;
     overflow: hidden;
     white-space: pre;
-    box-sizing: border-box;
 
     &.normal,
     &.real {
@@ -38,8 +36,22 @@ span {
     }
 
     &.real {
-      border: 1px solid $button-border;
+      $border: 1px solid $button-border;
+      border: {
+        right: $border;
+        left: $border;
+      }
       background-color: $button-color;
+
+      &.bot,
+      &.mid {
+        border-bottom: $border;
+      }
+
+      &.mid,
+      &.top {
+        border-top: $border;
+      }
 
       &:hover {
         &:not(:active) {
