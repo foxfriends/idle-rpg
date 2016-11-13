@@ -25,6 +25,7 @@ generate(function*() {
     // create all the displays here, and pass them to the state functions as needed
     display.set(display.home);
     yield* intro();
+    balls.rate = 0.5;
     hud.show();
     yield* ballPath();
     hud
