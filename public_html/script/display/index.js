@@ -88,7 +88,13 @@ class Display {
   //    refreshes the screen with the current content
   repaint() {
     this[ELEMENT].textContent = this[CONTENT].map((row) => row.join('')).join('\n');
-    for(let button of this[BUTTONS]) { button.attach(this[ELEMENT]); }
+    const buttons = [].concat(...this[BUTTONS].map((b) => b.getElements(this[ELEMENT])))
+      .sort(([a], [b]) => b - a) // sort so the last button is first
+      .forEach(([i, e]) => {
+        const remove = this[ELEMENT].firstChild.splitText(i);
+        const keep = remove.splitText(e.textContent.length);
+        this[ELEMENT].replaceChild(e, remove);
+      });
     return this;
   }
 
