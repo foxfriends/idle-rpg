@@ -14,7 +14,6 @@ const ButtonStyles = {
   Real: 'real'
 };
 
-// TODO#4: rethink how buttons work
 class Button {
   // Button(actions: { enter?: function, move?: function: click?: function, leave?: function },
   //        region: number[4],

@@ -26,9 +26,8 @@ span {
     white-space: pre;
 
     &.normal,
-    &.real {
+    &.real  {
       cursor: pointer;
-      user-select: none;
     }
 
     &.ninja {
@@ -42,6 +41,7 @@ span {
         left: $border;
       }
       background-color: $button-color;
+      user-select: none;
 
       &.bot,
       &.mid {
