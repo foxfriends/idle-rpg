@@ -13,9 +13,13 @@ function generate(generator, that, ...args) {
     // prepare for the next result
     const next = ({done, value}) => {
       if(done) { return resolve(value); }
-      value
-        .then(pass, fail)
-        .then(next, reject);
+      if(value instanceof Promise) {
+        value
+          .then(pass, fail)
+          .then(next, reject);
+      } else {
+        next(pass(value));
+      }
     };
     // start the generator
     next(run.next());
