@@ -2,16 +2,30 @@
 //     display
 'use strict';
 
+import { ButtonStyles } from '../display/button';
 import { infoPopup as info, setLocation, combine } from '../display/button-action';
 
-import { ButtonStyles } from '../display/button';
+// Town outside
 import HOUSE_NORMAL from 'graphics/town/house/normal.aag';
 import HOUSE_REVERSE from 'graphics/town/house/reverse.aag';
 import HOUSE_GARDEN from 'graphics/town/house/garden.aag';
 import HOUSE_DOUBLE from 'graphics/town/house/double.aag';
-import SHOPFRONT from 'graphics/town/shop/outside.aag';
-import SHOP from 'graphics/town/shop/inside.aag';
-import TOWNHALL from 'graphics/town/town-hall.aag';
+import SHOP_OUTSIDE from 'graphics/town/shop/outside.aag';
+import TOWNHALL_OUTSIDE from 'graphics/town/town-hall/outside.aag';
+// Buildings
+import WALLS from 'graphics/town/walls.aag';
+// Shop
+import DOORWAY from 'graphics/town/shop/door.aag';
+import TABLE from 'graphics/town/shop/table.aag';
+import SHELF_H from 'graphics/town/shop/shelf-h.aag';
+import SHELF_V from 'graphics/town/shop/shelf-v.aag';
+import WINDOW from 'graphics/town/shop/window.aag';
+// Town Hall
+import DESK from 'graphics/town/town-hall/desk.aag';
+import DOOR from 'graphics/town/town-hall/door.aag';
+import PAINTING from 'graphics/town/town-hall/painting.aag';
+
+import TOWNHALL_INSIDE from 'graphics/town/town-hall/inside.aag';
 
 const [DISPLAY, LOCATION, RENDER] = [Symbol(), Symbol(), Symbol()];
 
@@ -69,10 +83,10 @@ class MapView {
         .button(info('A house'), ButtonStyles.Ninja) // TODO#5: i18n
         .text('/ /', 41, 7)
       // buildings (front row)
-      .image(SHOPFRONT, 5, 10)
+      .image(SHOP_OUTSIDE, 5, 10)
         .button(combine(info('Shop'), setLocation('shop'))) // TODO#5: i18n
-      .image(TOWNHALL, 70, 10)
-        .button(info('Town Hall'), ButtonStyles.Ninja) // TODO#5: i18n
+      .image(TOWNHALL_OUTSIDE, 70, 10)
+        .button(combine(info('Town Hall'), setLocation('townHall'))) // TODO#5: i18n
         .text('/  /', 15, 22);
   }
 
@@ -80,7 +94,14 @@ class MapView {
   //    draws the shop
   shop() {
     this[DISPLAY]
-      .image(SHOP, 0, 0)
+      .image(WALLS, 0, 0)
+      .image(SHELF_H, 24, 1)
+      .image(SHELF_H, 24, 5)
+      .image(SHELF_H, 24, 9)
+      .image(SHELF_V, 3, 3)
+      .image(TABLE, 8, 20)
+      .image(DOORWAY, 73, 0, true)
+      .image(WINDOW, 108, 5)
       .text('Leave', 57, 35)
         .button(setLocation('townLeft'), ButtonStyles.Real);
   }
@@ -88,7 +109,13 @@ class MapView {
   // .townHall(): void
   //    draws the town hall
   townHall() {
-    this[DISPLAY];
+    this[DISPLAY]
+      .image(TOWNHALL_INSIDE, 0, 0)
+      .image(DESK, 20, 19)
+      .image(DOOR, 73, 0)
+      .image(PAINTING, 29, 2)
+      .text('Leave', 57, 35)
+        .button(setLocation('townLeft'), ButtonStyles.Real);
   }
 
   // .[RENDER](): this

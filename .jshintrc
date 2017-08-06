@@ -3,6 +3,7 @@
   "esnext": true,
   "elision": true,
   "expr": true,
+  "loopfunc": true,
   "globals": {
     "module": false,
     "window": false,

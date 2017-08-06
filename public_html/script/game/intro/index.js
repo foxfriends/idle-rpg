@@ -94,7 +94,7 @@ export default async function() {
   await new Promise((resolve) => {
     display
       .text(`You can't carry any more balls.`, 0, 6)
-      .text('Organize', 0, 2).button({
+      .text('Organize', 0, 2).removeButton().button({
         click() {
           // clear all the things
           balls.amount += ballsOnScreen.size;
@@ -107,6 +107,5 @@ export default async function() {
   });
   balls.off('change', counter);
   balls.off('tick', ticker);
-  balls.rate = 0.5;
   // intro is over!
 }

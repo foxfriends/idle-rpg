@@ -26,6 +26,7 @@ import MAP_BUTTON from 'graphics/hud/map.aag';
     await intro();
     // create the hud and attach it to its display
     hud.attach(display.hud);
+    balls.rate = 0.5;
     hud.show();
     await ballPath();
     hud

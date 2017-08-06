@@ -19,7 +19,7 @@ export default async function() {
   const before = balls.thrown;
   const pathBuilder = balls.on('throw', () => {
     const parts = balls.thrown - before;
-    display.image(pathParts.slice(0, parts + 1).join('o'), 0, 3);
+    display.image(pathParts.slice(0, Math.min(pathParts.length, parts + 1)).join('o'), 0, 3);
   });
   await balls.when.thrown(before + pathParts.length); // throw enough balls to make the path
   balls.off('throw', pathBuilder);
