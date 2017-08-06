@@ -5,7 +5,7 @@
   "main": "public_html/index.js",
   "scripts": {
     "start": "http-server public_html",
-    "test": "mocha"
+    "test": "echo 'No tests'"
   },
   "keywords": [
     "idle",
@@ -36,19 +36,16 @@
   ],
   "license": "UNLICENSED",
   "dependencies": {
-    "autoprefixer": "^6.5.0",
-    "babel-core": "^6.14.0",
-    "babel-loader": "^6.2.5",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.14.0",
+    "autoprefixer": "^6.7.7",
     "css-loader": "^0.25.0",
     "http-server": "^0.9.0",
-    "node-sass": "^3.10.0",
+    "node-sass": "^3.13.1",
     "normalize-newline": "^3.0.0",
     "postcss-loader": "^0.13.0",
     "sass-loader": "^4.0.2",
-    "style-loader": "^0.13.1",
+    "style-loader": "^0.13.2",
     "text-loader": "0.0.1",
-    "webpack": "^1.13.2"
+    "webpack": "^3.4.1"
   },
   "repository": {
     "type": "git",

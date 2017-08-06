@@ -16,20 +16,20 @@ import Wait from '../../util/wait';
 import pad from '../../util/pad';
 import { home as display } from '../displays';
 
-export default function*() {
+export default async function() {
   // wait 10 seconds for first ball
   const firstBall = new Wait(10000);
-  display.text('Throw?', 0, 0).createButton( { // TODO#5: i18n
+  display.text('Throw?', 0, 0).button( { // TODO#5: i18n
     click() { firstBall.reset(); }
   }, ButtonStyles.Real );
-  yield firstBall;
+  await firstBall;
   balls.amount = 1;
   // wait 10 seconds for more options
   const squeezeButton = new Wait(10000);
   display.clear()
     .text('A ball falls from the sky.', 0, 0) // TODO#5: i18n
     .text(balls.toString(true), 0, 1)
-    .text('Throw', 0, 2).createButton( { // TODO#5: i18n
+    .text('Throw', 0, 2).button( { // TODO#5: i18n
       click() {
         balls.throw();
         squeezeButton.cancel();
@@ -38,23 +38,23 @@ export default function*() {
           .text(balls.toString(true), 0, 1)
           .text('You have thrown away your only ball.', 0, 2).removeButton(); // TODO#5: i18n
       } }, ButtonStyles.Real );
-  yield squeezeButton;
+  await squeezeButton;
   // show the squeeze button
   // TODO#1: make this a 'progress' button when that helper is created
-  display.text('Squeeze', 0, 3).createButton( { click() { balls.amount = 2; } }, ButtonStyles.Real ); // TODO#5: i18n
-  yield balls.when(2);
+  display.text('Squeeze', 0, 3).button( { click() { balls.amount = 2; } }, ButtonStyles.Real ); // TODO#5: i18n
+  await balls.when(2);
   // wait for the player to throw away the balls
   display.clear()
     .text('You squeeze the ball, and another one pops out.', 0, 0) // TODO#5: i18n
     .text(balls.toString(true), 0, 1)
-    .text('Throw', 0, 2).createButton( { // TODO#5: i18n
+    .text('Throw', 0, 2).button( { // TODO#5: i18n
       click() {
         balls.throw();
         display
           .text(balls.toString(true), 0, 1)
           .text(balls.thrownString(true), 0, 3);
       } }, ButtonStyles.Real );
-  yield balls.when(0);
+  await balls.when(0);
   // all the balls have been thrown
   display.text('The balls roll away together.', 0, 4); // TODO#5: i18n
   // reproduction starts
@@ -78,7 +78,7 @@ export default function*() {
     display.text('o', pos[0], pos[1]);
     if(balls.amount < 10) {
       // can't pick up the new balls once you have 10
-      display.createButton({
+      display.button({
         click() {
           // pick up the balls on click
           ballsOnScreen.delete(pos.join('x'));
@@ -89,12 +89,12 @@ export default function*() {
     }
   });
   const counter = balls.on('change', () => display.text(balls.toString(true), 0, 1));
-  yield balls.when(10);
+  await balls.when(10);
   // TODO#1: make this a 'progress' button when the helper function is created
-  yield new Promise((resolve) => {
+  await new Promise((resolve) => {
     display
       .text(`You can't carry any more balls.`, 0, 6)
-      .text('Organize', 0, 2).createButton({
+      .text('Organize', 0, 2).button({
         click() {
           // clear all the things
           balls.amount += ballsOnScreen.size;

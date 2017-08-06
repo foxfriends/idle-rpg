@@ -4,14 +4,13 @@ const path = require('path');
 module.exports = {
   entry: './public_html/script/index.js',
   output: {
-    path: './public_html',
-    filename: 'index.min.js'
+    path: path.resolve('.', 'public_html'),
+    filename: 'index.min.js',
   },
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules.*\.js/, loader: 'babel?plugins[]=transform-es2015-modules-commonjs' }, // scripts
-      { test: /\.s(a|c)ss$/, exclude: /node_modules.*\.js/, loader: 'style!css!postcss!sass' }, // styles
-      { test: /\.aag$/, loader: 'text' } // ascii art graphic
+      { test: /\.s(a|c)ss$/, exclude: /node_modules.*\.js/, loader: 'style-loader!css-loader!postcss-loader!sass-loader' }, // styles
+      { test: /\.aag$/, loader: 'text-loader' }, // ascii art graphic
     ],
   },
   resolve: {
@@ -19,8 +18,4 @@ module.exports = {
       graphics: path.resolve('./public_html/graphics')
     }
   },
-  postcss: function() {
-    return [ autoprefixer ];
-  },
-  devtool: ['source-map']
 };

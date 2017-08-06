@@ -1,7 +1,5 @@
 // Manages the current state of the game (balls, progress, stats, etc.)
 'use strict';
-import generate from '../util/generate';
-
 // initialize data
 import balls from '../data/balls';
 import inventory from  '../data/items';
@@ -21,15 +19,15 @@ import INV_BUTTON from 'graphics/hud/inv.aag';
 import MAP_BUTTON from 'graphics/hud/map.aag';
 
 // put the states in order
-generate(function*() {
+(async function() {
   try {
     // create all the displays here, and pass them to the state functions as needed
     display.set(display.home);
-    // yield* intro();
+    await intro();
     // create the hud and attach it to its display
     hud.attach(display.hud);
     hud.show();
-    // yield* ballPath();
+    await ballPath();
     hud
       .unlock(hud.Feature.HomeButton)
       .unlock(hud.Feature.MapButton);
@@ -42,7 +40,7 @@ generate(function*() {
     display.set(display.map);
     // create the map view and attach it to the display
     map.attach(display.map);
-    yield* town();
+    await town();
   } catch(error) {
     // game over... how did you lose this game ><
     //  - throw away your only ball during the intro
@@ -51,4 +49,4 @@ generate(function*() {
       console.error(error);
     }
   }
-});
+})();

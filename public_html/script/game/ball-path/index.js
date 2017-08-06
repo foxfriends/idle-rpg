@@ -13,25 +13,25 @@ import Deferred from '../../util/deferred';
 
 const pathParts = PATH_IMAGE.split(/[oO0]/);
 
-export default function*() {
+export default async function() {
   // throw balls
-  display.text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real); // TODO#5: i18n
+  display.text('Throw', 1, 1).button({ click() { balls.throw(); } }, ButtonStyles.Real); // TODO#5: i18n
   const before = balls.thrown;
   const pathBuilder = balls.on('throw', () => {
     const parts = balls.thrown - before;
     display.image(pathParts.slice(0, parts + 1).join('o'), 0, 3);
   });
-  yield balls.when.thrown(before + pathParts.length); // throw enough balls to make the path
+  await balls.when.thrown(before + pathParts.length); // throw enough balls to make the path
   balls.off('throw', pathBuilder);
   // TODO#1: create a helper function to make creating 'progress' buttons cleaner
   let followPath = new Deferred();
   display
     .text('-->', 117, 40)
-    .createButton(progress(followPath), undefined, [117, 38, 3, 4]);
-  yield followPath;
+    .button(progress(followPath), undefined, [117, 38, 3, 4]);
+  await followPath;
   // remove the path from the home screen
   display
     .clear()
-    .text('Throw', 1, 1).createButton({ click() { balls.throw(); } }, ButtonStyles.Real) // TODO#5: i18n
+    .text('Throw', 1, 1).button({ click() { balls.throw(); } }, ButtonStyles.Real) // TODO#5: i18n
     .text(balls.thrownString(true), 1, 2);
 }

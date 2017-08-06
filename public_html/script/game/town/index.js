@@ -3,6 +3,4 @@
 
 import { map as display } from '../displays';
 
-export default function*() {
-  yield;
-}
+export default async function() {}
